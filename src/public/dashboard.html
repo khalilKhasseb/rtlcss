@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTLCSS API - Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-indigo-600 shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <span class="text-white font-bold text-xl">RTLCSS API</span>
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="ml-10 flex items-baseline space-x-4">
+                                <a href="#" class="bg-indigo-700 text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                                <a href="#" class="text-gray-300 hover:bg-indigo-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium" id="api-keys-tab">API Keys</a>
+                                <a href="#" class="text-gray-300 hover:bg-indigo-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium" id="logs-tab">Logs</a>
+                                <a href="#" class="text-gray-300 hover:bg-indigo-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium" id="settings-tab">Settings</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-4 flex items-center md:ml-6">
+                            <span class="text-gray-300 text-sm" id="version-info">Version: 1.0.0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <!-- Status Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
+                                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">API Status</dt>
+                                    <dd>
+                                        <div class="text-lg font-medium text-gray-900" id="api-status">Operational</div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">Total Conversions</dt>
+                                    <dd>
+                                        <div class="text-lg font-medium text-gray-900" id="total-conversions">0</div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
+                                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">Active API Keys</dt>
+                                    <dd>
+                                        <div class="text-lg font-medium text-gray-900" id="active-api-keys">0</div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-yellow-500 rounded-md p-3">
+                                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">Avg. Processing Time</dt>
+                                    <dd>
+                                        <div class="text-lg font-medium text-gray-900" id="avg-processing-time">0ms</div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+                <!-- Conversion Types Chart -->
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Conversion Types</h3>
+                        <div class="mt-4">
+                            <canvas id="conversion-types-chart" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conversion Over Time Chart -->
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Conversions Over Time</h3>
+                        <div class="mt-4">
+                            <canvas id="conversions-over-time-chart" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Info -->
+            <div class="bg-white overflow-hidden shadow rounded-lg mb-8">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">System Information</h3>
+                    <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        <div class="bg-gray-50 overflow-hidden rounded-lg px-4 py-5">
+                            <dt class="text-sm font-medium text-gray-500 truncate">Service Uptime</dt>
+                            <dd class="mt-1 text-3xl font-semibold text-gray-900" id="service-uptime">0d 0h 0m</dd>
+                        </div>
+                        <div class="bg-gray-50 overflow-hidden rounded-lg px-4 py-5">
+                            <dt class="text-sm font-medium text-gray-500 truncate">RTLCSS Version</dt>
+                            <dd class="mt-1 text-3xl font-semibold text-gray-900" id="rtlcss-version">4.1.0</dd>
+                        </div>
+                        <div class="bg-gray-50 overflow-hidden rounded-lg px-4 py-5">
+                            <dt class="text-sm font-medium text-gray-500 truncate">Environment</dt>
+                            <dd class="mt-1 text-3xl font-semibold text-gray-900" id="environment">development</dd>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Conversions -->
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Conversions</h3>
+                    <div class="mt-4 flex flex-col">
+                        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">API Key</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Conversion Type</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Processing Time</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200" id="recent-conversions-body">
+                                            <!-- Data will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mock data for the dashboard
+        const mockData = {
+            status: {
+                status: 'operational',
+                version: '1.0.0',
+                rtlcssVersion: '4.1.0',
+                uptime: 86400 * 3 + 3600 * 5 + 60 * 10, // 3 days, 5 hours, 10 minutes
+                environment: 'production'
+            },
+            stats: {
+                totalConversions: 12560,
+                activeApiKeys: 32,
+                avgProcessingTime: 52,
+                conversionTypes: {
+                    ltrToRtl: 9780,
+                    rtlToLtr: 2780
+                },
+                conversionsOverTime: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    data: [1200, 1900, 2400, 2100, 2600, 2300]
+                },
+                recentConversions: [
+                    { apiKey: 'api_*****', type: 'ltr_to_rtl', originalSize: 5240, convertedSize: 5410, processingTime: 45, timestamp: '2023-05-01T12:00:00Z' },
+                    { apiKey: 'api_*****', type: 'rtl_to_ltr', originalSize: 6120, convertedSize: 6050, processingTime: 62, timestamp: '2023-05-01T11:45:00Z' },
+                    { apiKey: 'api_*****', type: 'ltr_to_rtl', originalSize: 3980, convertedSize: 4100, processingTime: 38, timestamp: '2023-05-01T11:30:00Z' },
+                    { apiKey: 'api_*****', type: 'ltr_to_rtl', originalSize: 7240, convertedSize: 7500, processingTime: 71, timestamp: '2023-05-01T11:15:00Z' },
+                    { apiKey: 'api_*****', type: 'rtl_to_ltr', originalSize: 2580, convertedSize: 2480, processingTime: 28, timestamp: '2023-05-01T11:00:00Z' }
+                ]
+            }
+        };
+
+        // Update dashboard with mock data
+        function updateDashboard(data) {
+            // Update status cards
+            document.getElementById('api-status').textContent = data.status.status.charAt(0).toUpperCase() + data.status.status.slice(1);
+            document.getElementById('total-conversions').textContent = data.stats.totalConversions.toLocaleString();
+            document.getElementById('active-api-keys').textContent = data.stats.activeApiKeys;
+            document.getElementById('avg-processing-time').textContent = data.stats.avgProcessingTime + 'ms';
+            
+            // Update version info
+            document.getElementById('version-info').textContent = 'Version: ' + data.status.version;
+            
+            // Update system information
+            document.getElementById('rtlcss-version').textContent = data.status.rtlcssVersion;
+            document.getElementById('environment').textContent = data.status.environment;
+            
+            // Format uptime
+            const uptime = data.status.uptime;
+            const days = Math.floor(uptime / 86400);
+            const hours = Math.floor((uptime % 86400) / 3600);
+            const minutes = Math.floor((uptime % 3600) / 60);
+            document.getElementById('service-uptime').textContent = `${days}d ${hours}h ${minutes}m`;
+            
+            // Create conversion types chart
+            const ctxTypes = document.getElementById('conversion-types-chart').getContext('2d');
+            new Chart(ctxTypes, {
+                type: 'doughnut',
+                data: {
+                    labels: ['LTR to RTL', 'RTL to LTR'],
+                    datasets: [{
+                        data: [data.stats.conversionTypes.ltrToRtl, data.stats.conversionTypes.rtlToLtr],
+                        backgroundColor: ['#6366F1', '#10B981'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    }
+                }
+            });
+            
+            // Create conversions over time chart
+            const ctxTime = document.getElementById('conversions-over-time-chart').getContext('2d');
+            new Chart(ctxTime, {
+                type: 'line',
+                data: {
+                    labels: data.stats.conversionsOverTime.labels,
+                    datasets: [{
+                        label: 'Conversions',
+                        data: data.stats.conversionsOverTime.data,
+                        fill: false,
+                        borderColor: '#6366F1',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            // Populate recent conversions table
+            const recentConversionsBody = document.getElementById('recent-conversions-body');
+            recentConversionsBody.innerHTML = '';
+            
+            data.stats.recentConversions.forEach(conversion => {
+                const row = document.createElement('tr');
+                
+                // API Key
+                const apiKeyCell = document.createElement('td');
+                apiKeyCell.className = 'px-6 py-4 whitespace-nowrap';
+                apiKeyCell.innerHTML = `<div class="text-sm text-gray-900">${conversion.apiKey}</div>`;
+                row.appendChild(apiKeyCell);
+                
+                // Conversion Type
+                const typeCell = document.createElement('td');
+                typeCell.className = 'px-6 py-4 whitespace-nowrap';
+                const typeLabel = conversion.type === 'ltr_to_rtl' ? 'LTR to RTL' : 'RTL to LTR';
+                const typeClass = conversion.type === 'ltr_to_rtl' ? 'bg-indigo-100 text-indigo-800' : 'bg-green-100 text-green-800';
+                typeCell.innerHTML = `<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${typeClass}">${typeLabel}</span>`;
+                row.appendChild(typeCell);
+                
+                // Size
+                const sizeCell = document.createElement('td');
+                sizeCell.className = 'px-6 py-4 whitespace-nowrap';
+                sizeCell.innerHTML = `<div class="text-sm text-gray-900">${(conversion.originalSize / 1024).toFixed(1)} KB → ${(conversion.convertedSize / 1024).toFixed(1)} KB</div>`;
+                row.appendChild(sizeCell);
+                
+                // Processing Time
+                const timeCell = document.createElement('td');
+                timeCell.className = 'px-6 py-4 whitespace-nowrap';
+                timeCell.innerHTML = `<div class="text-sm text-gray-900">${conversion.processingTime} ms</div>`;
+                row.appendChild(timeCell);
+                
+                // Timestamp
+                const timestampCell = document.createElement('td');
+                timestampCell.className = 'px-6 py-4 whitespace-nowrap';
+                const date = new Date(conversion.timestamp);
+                timestampCell.innerHTML = `<div class="text-sm text-gray-500">${date.toLocaleString()}</div>`;
+                row.appendChild(timestampCell);
+                
+                recentConversionsBody.appendChild(row);
+            });
+        }
+
+        // Initialize with mock data
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDashboard(mockData);
+        });
+    </script>
+</body>
+</html>
